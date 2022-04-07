@@ -1,71 +1,116 @@
 ***ANSWER ALL OF THE QUESTIONS BELOW***
 
 Why do we need data structure?
-Answer:
+Answer: We need data structures to store and organize the data in an efficient way.
 
 What are the various operations that can be performed on different data structures?
-Answer:
+Answer: We can perform various operations on different data structures like Insertion, Deletion, Sorting etc..
 
 When would we use data structures in the real world?
-Answer:
+Answer: We use data structure every day in the real world like:
+                we use 2-D array to store a picture
+                we use Queue to give tickets on website like ticket master to FIFO bases etc..
 
 What is an Array?
-Answer:
+Answer: Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
 
 What is the difference between Array and ArrayList?
-Answer:
+Answer: Array is a fixed length data structure. We cannot change the length of Array once created in Java. We can store both primitives and objects in Java. Whereas, ArrayList is a variable length
+        Collection class. We can change the length of ArrayList. We cannot store primitives in ArrayList, it can only store objects.
 
 What is a LinkedList?
-Answer:
+Answer: LinkedList are the nodes or index.
+        They can be stored anywhere in the memory. Each node contains two things:
+            Value of the element.
+            Address of the next node.
 
 How is an Array different from LinkedList?
-Answer:
+Answer: An array is a collection of elements of a similar data type, whereas A linked list is a collection of objects known as a node where node consists of two parts, i.e., data and address.
+        An Array elements store in a contiguous memory location, whereas Linked list elements can be stored anywhere in the memory or randomly stored.
+        An Array works with a static memory, whereas Linked list works with dynamic memory.
+        An Array elements are independent of each other, whereas Linked list elements are dependent on each other. As each node contains the address of the next node so to access the next node, we
+        need to access its previous node.
+        In the case of an array, memory is allocated at compile-time, whereas in the case of a linked list, memory is allocated at run time.
 
 What is a Queue?
-Answer:
+Answer: A Queue is an interface that follows the principle of FIFO (First In First Out).
 
 What is a Stack (referring to data structures)?
-Answer:
+Answer: Stack is a class that follows the principle of LIFO (Last In First Out) Or FILO (First In Last Out).
 
 What is FIFO and LIFO?
-Answer:
+Answer: FIFO: First In First Out. Queue follows this principle.
+        LIFO: Last in First Out. Stack follows this principle.
 
 Explain Big O Notation?
-Answer:
+Answer: The measure of algorithmic efficiency, given a data set with a size of n
+        Worst time efficiency for code is: n!
 
 What is the best case to search an element from an array?
-Answer:
+Answer: Best case to search an element from an array is O(1) when the element is first or last element in the array.
 
 What is the worst case to search an element from an array?
-Answer:
+Answer: Worst case to search an element from an array is O(n!).
 
 Describe what a tree data structure is?
-Answer:
+Answer: A Tree is a non-linear data structure where data objects are organized in terms of hierarchical relationship. The structure is non-linear in the sense that, unlike simple array and linked list
+        implementation, data in a tree is not organized linearly. Each data element is stored in a structure called a node.
 
 Describe what a graph data structure is?
-Answer:
+Answer: A graph is a non-linear kind of data structure made up of nodes or vertices and edges. The edges connect any two nodes in the graph, and the nodes are also known as vertices.
 
 What is the difference between the HashTable and HashMap?
-Answer:
+Answer: In HashMap, no method is synchronized, whereas in HashTable Every method is synchronized.
+        In HashMap, multiple threads can operate simultaneously and hence hashmap’s object is not thread-safe, whereas in HashTable at a time only one thread is allowed to operate the Hashtable’s
+        object. Hence, it is thread-safe.
+        In HashMap, threads are not required to wait and hence relatively performance is high, whereas in HashTable it increases the waiting time of the thread and hence performance is low.
+        In HashMap, null is allowed for both key and value, whereas in HashTable null is not allowed for both key and value. Otherwise, we will get a null pointer exception.
 
 How do HashMaps work in Java? How do they store values, and when are they useful?
-Answer:
+Answer: HashMap in Java works on hashing principles. It is a data structure that allows us to store object and retrieve it in constant time O(1) provided we know the key.
+        In hashing, hash functions are used to store the values in keys-values pair.
+        HashMaps are useful when search for items based on a key and quick access time is an important requirement.
 
 What is ArrayIndexOutOfBoundsException in java? When does it occur?
-Answer:
+Answer: ArrayIndexOutOfBoundsException is an exception in Java. This breaks the code during run time when index is either negative or greater than or equal to the size of the array.
 
 What are the different ways of copying an array into another array?
-Answer:
+Answer: Iterating each element of the given original array and copy one element at a time
+        Using clone() method
+        Using arraycopy() method
+        Using copyOf() method of Arrays class
+        Using copyOfRange() method of Arrays class
 
 What is DFS and BFS?
-Answer:
+Answer: Depth First Search (DFS) is an algorithm of graph traversal which starts exploring from a source node (generally the root node) and then explores as many nodes as possible before backtracking.
+        Breadth-First Search (BFS) relies on the traversal of nodes by the addition of the neighbor of every node starting from the root node to the traversal queue.
 
 What is Recursion?
-Answer:
+Answer: Recursion is the technique of making a function call itself.
+        This technique provides a way to break complicated problems down into simple problems which are easier to solve.
 
 What are linear and non-linear data Structures?
-Answer:
+Answer: Linear Data Structure:
+                            A linear data structure is a structure in which the elements are stored sequentially, and the elements are connected to the previous and the next element.
+                            As the elements are stored sequentially, so they can be traversed or accessed in a single run.
+                            The implementation of linear data structures is easier as the elements are sequentially organized in memory.
+                            The data elements in an array are traversed one after another and can access only one element at a time.
+                            The types of linear data structures are Array, Queue, Stack, Linked List.
+
+        Non-linear data Structures:
+                            A non-linear data structure is also another type of data structure in which the data elements are not arranged in a contiguous manner.
+                            As the arrangement is non-sequential, so the data elements cannot be traversed or accessed in a single run.
+                            In the non-linear data structure, an element can be connected to more than two elements.
+                            Trees and Graphs are the types of non-linear data structure.
 
 
 Outline different sorting algorithms and their time complexities:
-
+        Sorting Algorithm	    Best Time       Average	Time    Worst Time
+        Quick Sort	            (n log(n))	    (n log(n))	    (n^2)
+        Bubble Sort	            (n)	            (n^2)	        (n^2)
+        Merge Sort	            (n log(n))	    (n log(n))	    (n log(n))
+        Insertion Sort	        (n)	            (n^2)	        (n^2)
+        Selection Sort	        (n^2)	        (n^2)	        (n^2)
+        Heap Sort	            (n log(n))	    (n log(n))	    (n log(n))
+        Radix Sort	            (nk)	        (nk)	        (nk)
+        Bucket Sort	            (n+k)	        (n+k)	        (n^2)
