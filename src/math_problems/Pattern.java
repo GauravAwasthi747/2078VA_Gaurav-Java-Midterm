@@ -12,5 +12,27 @@ public class Pattern {
 
     public static void main(String[] args) {
 
+        //calling method
+        getPattern();
     }
+
+    /**
+     * This method will follow the pattern as given in the output.
+     */
+    static void getPattern() {
+        for (int i = 100; i >= 0;) {
+            System.out.print(i +", ");
+
+            if ((i <= 100) && (i >= 91) ) {
+                i--;
+            }else if ((i <= 90) && (i >= 71)) {
+                i = i-2;
+            }else if ((i <= 70) && (i >= 41)) {
+                i = i-3;
+            } else {
+                i = i - 4;
+            }
+        }
+    }
+
 }
