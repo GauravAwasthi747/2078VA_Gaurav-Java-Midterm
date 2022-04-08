@@ -19,6 +19,7 @@ public class Fibonacci {
 
         System.out.print("How many Fibonacci numbers do you want to create: ");
         int number = objScanner.nextInt();
+        objScanner.close();
 
         //Calling the method.
         getFibonacciNumber(number);

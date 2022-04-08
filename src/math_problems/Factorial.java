@@ -18,6 +18,7 @@ public class Factorial {
 
         System.out.print("Enter the number: ");
         int number = objScanner.nextInt();
+        objScanner.close();
 
         //Method: 1 --> Iteration
         System.out.println("Getting factorial result via iteration");
