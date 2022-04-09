@@ -1,5 +1,9 @@
 package string_problems;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +17,6 @@ public class DetermineLargestWord {
          */
         String s = "Human brain is a biological learning machine";
         Map<Integer, String> wordNLength = findTheLargestWord(s);
-
-
     }
 
     public static Map<Integer, String> findTheLargestWord(String wordGiven) {
@@ -22,6 +24,26 @@ public class DetermineLargestWord {
         String st = "";
 
         // Implement here
+
+        //Checking if Hash-map is empty
+        boolean isEmpty = map.isEmpty();
+        System.out.println("Is initial created Hash-Map empty: " + isEmpty);
+
+        String[] myArray = wordGiven.split(" ");
+        int temp = 0, wordLength = 0;
+        String biggestWord = null;
+
+       for (String a : myArray) {
+           wordLength = a.length();
+
+           if(wordLength >= temp) {
+               temp = wordLength;
+               biggestWord = a;
+           }
+        }
+
+        map.put(temp,  biggestWord);
+        System.out.println("Hash-Map for biggest word as key : word is: " + map);
 
         return map;
     }
