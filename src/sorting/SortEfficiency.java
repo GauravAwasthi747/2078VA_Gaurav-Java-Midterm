@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import databases.SharedStepsDatabase;
+import json.util.JsonReaderUtil;
 
-    /** INSTRUCTIONS
+/** INSTRUCTIONS
      * Demonstrate all the different kind of sorting algorithms from the Sorting class. There is an example provided
      *  below to get you started.
      *
@@ -33,68 +34,155 @@ public class SortEfficiency {
         SharedStepsDatabase ssdb = new SharedStepsDatabase();
 
         // region Selection Sort
-        numberArray = algo.selectionSort(numberArray);
         long selectionSortExecutionTime = algo.executionTime;
 
-        System.out.println("***SELECTION SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+        numberArray = algo.selectionSort(numberArray);
+
+        System.out.println("***SELECTION SORT***\nArray Length: " + numberArray.length + "\nExecution Time: "
                 + selectionSortExecutionTime + " milliseconds");
 
         // Insert sorted array into a database table, with the desired table name and column name
         ssdb.insertIntegerArray("selection_sort", "sorted_numbers", numberArray);
 
         // Retrieve all elements from the newly created table
-        String query = "SELECT * FROM SELECTION_SORT";
-        List<String> sorted_numbers = ssdb.executeQueryReadAllSingleColumn(query, "sorted_numbers");
-        printValue(sorted_numbers);
+        String selection_sort_query = "SELECT * FROM SELECTION_SORT";
+        List<String> selection_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(selection_sort_query, "sorted_numbers");
+        printValue(selection_sorted_numbers);
+        // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
+       randomize(numberArray);
+
+        // region Insertion Sort
+        long insertionSortExecutionTime = algo.executionTime;
+
+        numberArray = algo.bubbleSort(numberArray);
+
+        System.out.println("***INSERTION SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + insertionSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("insertion_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String insertion_sort_query = "SELECT * FROM INSERTION_SORT";
+        List<String> insertion_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(insertion_sort_query, "sorted_numbers");
+        printValue(insertion_sorted_numbers);
         // endregion
 
         // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
-        // region Insertion Sort
-        numberArray = algo.insertionSort(numberArray);
-        long insertionSortExecutionTime = algo.executionTime;
-
-        System.out.println("Total Execution Time of " + numberArray.length + " numbers in Insertion Sort took: "
-                + insertionSortExecutionTime + " milliseconds");
-
-        // endregion
-
-        randomize(numberArray);
-
         // region Bubble Sort
+        long bubbleSortExecutionTime = algo.executionTime;
 
+        numberArray = algo.bubbleSort(numberArray);
+
+        System.out.println("***BUBBLE SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + bubbleSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("bubble_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String bubble_sort_query = "SELECT * FROM BUBBLE_SORT";
+        List<String> bubble_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(bubble_sort_query, "sorted_numbers");
+        printValue(bubble_sorted_numbers);
         // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
         // region Merge Sort
+        long mergeSortExecutionTime = algo.executionTime;
 
+        numberArray = algo.mergeSort(numberArray);
+        System.out.println("***MERGE SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + mergeSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("merge_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String merge_query = "SELECT * FROM MERGE_SORT";
+        List<String> merge_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(merge_query, "sorted_numbers");
+        printValue(merge_sorted_numbers);
         // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
         // region Quick Sort
+        long quickSortExecutionTime = algo.executionTime;
 
+        numberArray = algo.mergeSort(numberArray);
+        System.out.println("***QUICK SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + quickSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("quick_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String quick_query = "SELECT * FROM QUICK_SORT";
+        List<String> quick_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(quick_query, "sorted_numbers");
+        printValue(quick_sorted_numbers);
         // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
         // region Heap Sort
+        numberArray = algo.heapSort(numberArray);
+        long heapSortExecutionTime = algo.executionTime;
 
+        System.out.println("***HEAP SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + heapSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("heap_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String heap_query = "SELECT * FROM HEAP_SORT";
+        List<String> heap_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(heap_query, "sorted_numbers");
+        printValue(heap_sorted_numbers);
         // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
         // region Bucket Sort
+        numberArray = algo.heapSort(numberArray);
+        long bucketSortExecutionTime = algo.executionTime;
 
+        System.out.println("***BUCKET SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + bucketSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("bucket_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String bucket_query = "SELECT * FROM BUCKET_SORT";
+        List<String> bucket_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(bucket_query, "sorted_numbers");
+        printValue(bucket_sorted_numbers);
         // endregion
 
+        // You must randomize the number array after each sorting algorithm to prepare it for the next sorting algorithm
         randomize(numberArray);
 
         // region Shell Sort
+        numberArray = algo.heapSort(numberArray);
+        long shellSortExecutionTime = algo.executionTime;
 
+        System.out.println("***SHELL SORT***\nArray Length: " + numberArray.length + "\nExecution TIme: "
+                + shellSortExecutionTime + " milliseconds");
+
+        // Insert sorted array into a database table, with the desired table name and column name
+        ssdb.insertIntegerArray("shell_sort", "sorted_numbers", numberArray);
+
+        // Retrieve all elements from the newly created table
+        String shell_query = "SELECT * FROM SHELL_SORT";
+        List<String> shell_sorted_numbers = ssdb.executeQueryReadAllSingleColumn(shell_query, "sorted_numbers");
+        printValue(shell_sorted_numbers);
         // endregion
     }
 

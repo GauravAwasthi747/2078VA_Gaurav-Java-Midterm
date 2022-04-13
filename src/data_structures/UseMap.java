@@ -17,7 +17,7 @@ public class UseMap {
          * Store and retrieve data_structures.data from/to a database table.
          */
 
-        HashMap<Object, Object> map = new HashMap<>();
+        Map<Object, Object> map = new HashMap<>();
         map.put(8454, "lamia");
         map.put(4567, "azar");
         map.put(7898, "rahim");
@@ -31,10 +31,16 @@ public class UseMap {
             System.out.println("VALUE: " + map.get(key));
         }
 
-        String tableName = "`test_hash_map`";
-        SharedStepsDatabase sql = new SharedStepsDatabase();
+        System.out.println("\nAdding to Data-base");
+        String tableName = "test_hash_map";
+        SharedStepsDatabase ssdb = new SharedStepsDatabase();
+        ssdb.insertMap(tableName,map);
 
-        // IMPLEMENT HERE
-
+        System.out.println("\nRetrieving from Data-base");
+        //System.out.println(ssdb.executeQueryReadAll("SELECT * FROM " + tableName.toUpperCase()));
+        List<List<String>> query = ssdb.executeQueryReadAll("SELECT * FROM " + tableName.toUpperCase());
+        for (List<String> x : query) {
+            System.out.println(x);
+        }
     }
 }

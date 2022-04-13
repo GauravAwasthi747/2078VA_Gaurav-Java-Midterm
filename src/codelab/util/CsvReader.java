@@ -12,14 +12,14 @@ import java.util.List;
 public class CsvReader {
 
     /**
-     You will find a Comma-Separated Value (CSV) file within this package of CodeLab status is downloaded and it parsed.
-     Based on number of solution you solved, message is generated for you.
+     You will find a Comma-Separated Value (CSV) file within this package. it Contains CodeLab status for each student who registered for the CodeLab course.
+     Based on number of solution you solved in CodeLab, a message will be generated for you.
      You need to find the average score of the class.
      **/
 
     public static void main(String[] args) {
 
-        String csvFilePath = System.getProperty("user.dir") + "/src/codelab/status/roster.csv";
+        String csvFilePath = System.getProperty("user.dir") + "\\src\\codelab\\data\\roster.csv";
         String row;
         String csvSplitBy = ",";
         BufferedReader br;
@@ -43,9 +43,17 @@ public class CsvReader {
 
         Collections.sort(roster);
 
+        int numOfProblemSolved = 0, studentCount = 1, total = 0, average = 0;
+
         for (Student student : roster) {
+            numOfProblemSolved = student.getNumberOfExercisesSolved();
+            total = total + numOfProblemSolved;
+            studentCount++;
             System.out.println(convertNumberOfProblemsSolved(student));
         }
+
+        average = total/studentCount;
+        System.out.println("\naverage problem solved in code-lab is: " + average);
     }
 
     private static String convertNumberOfProblemsSolved(Student student) {

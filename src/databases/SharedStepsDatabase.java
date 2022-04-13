@@ -160,7 +160,7 @@ public class SharedStepsDatabase {
             ps.executeUpdate();
 
             ps = connect.prepareStatement(
-                    "CREATE TABLE `" + tableName + "` (`ID` int(11) NOT NULL AUTO_INCREMENT,`sorted_numbers` bigint(20) DEFAULT NULL,  PRIMARY KEY (`ID`) );");
+                    "CREATE TABLE `" + tableName + "` (`ID` int(11) NOT NULL AUTO_INCREMENT,`" + columnName + "` bigint(20) DEFAULT NULL,  PRIMARY KEY (`ID`) );");
             ps.executeUpdate();
 
             for (int n = 0; n < array.length; n++) {
@@ -202,7 +202,7 @@ public class SharedStepsDatabase {
             ps = connect.prepareStatement("DROP TABLE IF EXISTS `" + tableName + "`;");
             ps.executeUpdate();
             ps = connect.prepareStatement(
-                    "CREATE TABLE `" + tableName + "` (`ID` int(11) NOT NULL AUTO_INCREMENT,`SortingNumbers` bigint(20) DEFAULT NULL,  PRIMARY KEY (`ID`) );");
+                    "CREATE TABLE `" + tableName + "` (`ID` int(11) NOT NULL AUTO_INCREMENT,`" + columnName + "` bigint(20) DEFAULT NULL,  PRIMARY KEY (`ID`) );");
             ps.executeUpdate();
 
             for (Object st : list) {
@@ -234,6 +234,29 @@ public class SharedStepsDatabase {
                 sql.append("'").append(key).append("', '").append(map.get(key)).append("'), (");
             }
             String sqlString = sql.toString();
+            sqlString = sqlString.substring(0, sqlString.length() - 3);
+
+            ps = connect.prepareStatement(sqlString);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertQueue(String tableName, Queue<Integer> queue) {
+        try {
+            ps = connect.prepareStatement("DROP TABLE IF EXISTS " + tableName + ";");
+            ps.executeUpdate();
+            ps = connect.prepareStatement("CREATE TABLE " + tableName + " (`key` VARCHAR(45) DEFAULT 1 NOT NULL, `value` VARCHAR(45) NULL);");
+            ps.executeUpdate();
+
+            StringBuilder sql = new StringBuilder("INSERT INTO ").append(tableName).append(" (`key`, `value`)").append(" VALUES (");
+
+            for (Object key : queue){
+                sql.append("'").append(key).append("', '").append(queue.contains(key)).append("'), (");
+            }
+            String sqlString = sql.toString();
             sqlString = sqlString.substring(0, sqlString.length() - 3);;
 
             ps = connect.prepareStatement(sqlString);
@@ -243,6 +266,30 @@ public class SharedStepsDatabase {
             e.printStackTrace();
         }
     }
+
+    public void insertArrayList(String tableName, List<Object> list) {
+        try {
+            ps = connect.prepareStatement("DROP TABLE IF EXISTS " + tableName + ";");
+            ps.executeUpdate();
+            ps = connect.prepareStatement("CREATE TABLE " + tableName + " (`key` VARCHAR(45) DEFAULT 1 NOT NULL, `value` VARCHAR(45) NULL);");
+            ps.executeUpdate();
+
+            StringBuilder sql = new StringBuilder("INSERT INTO ").append(tableName).append(" (`key`, `value`)").append(" VALUES (");
+
+            for (Object key : list) {
+                sql.append("'").append(key).append("', '").append(list.contains(key)).append("'), (");
+            }
+            String sqlString = sql.toString();
+            sqlString = sqlString.substring(0, sqlString.length() - 3);;
+
+            ps = connect.prepareStatement(sqlString);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Closes all static resources

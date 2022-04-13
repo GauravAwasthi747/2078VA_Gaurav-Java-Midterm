@@ -16,7 +16,7 @@ public class UnitTestSorting {
         Sorting sorting = new Sorting();
 
         // Pass the unsorted array to selectionSort() method (or any method you want to unit test) from Sort class
-        sorting.selectionSort(unSortedArray);
+        sorting.mergeSort(unSortedArray);
 
         // Verify if the unsorted array is sorted by the desired method
         Assert.assertEquals(unSortedArray, sortedArray, "ARRAY IS NOT SORTED... YET!");
