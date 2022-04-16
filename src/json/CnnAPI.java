@@ -58,8 +58,8 @@ public class CnnAPI {
      */
 
     public static void main(String[] args) throws IOException, JSONException {
-        String apiKey = "";
-        String URL = "";
+        String apiKey = "fcf9aeae20674b3195b6349b8e606b4d";
+        String URL = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=" + apiKey;
 
         NewsData news = null;
         List<NewsData> newsDataList = new ArrayList<>();
@@ -98,12 +98,30 @@ public class CnnAPI {
                 JsonObject jsonobject = jsonArray.get(i).getAsJsonObject();
 
                 title = jsonobject.get("title").toString();
-                System.out.println("TITLE: " + title);
+                source = jsonobject.get("source").getAsJsonObject().get("name").toString();
+                author = jsonobject.get("author").toString();
+                description = jsonobject.get("description").toString();
+                url = jsonobject.get("url").toString();
+                urlToImage = jsonobject.get("urlToImage").toString();
+                publishedAt = jsonobject.get("publishedAt").toString();
+                content = jsonobject.get("content").toString();
+
+                NewsData headline = new NewsData(source, author, title, description, url, urlToImage, publishedAt, content);
+                newsDataList.add(headline);
+
+                System.out.println("\nTITLE: " + title);
+                System.out.println("SOURCE: " + source);
+                System.out.println("AUTHOR : " +author);
+                System.out.println("DESCRIPTION : " + description);
+                System.out.println("URL : " + url);
+                System.out.println("URL_TO_IMAGE : " + urlToImage);
+                System.out.println("PUBLISHED_AT : " + publishedAt);
+                System.out.println("CONTENT : " + content);
 
                 // Implement the remaining code, using the provided example within this try block
 
             } catch (Exception ex) {
-
+                ex.printStackTrace();
             }
         }
     }
@@ -113,8 +131,6 @@ public class CnnAPI {
 
         public NewsData(String source, String author, String title, String description, String url, String urlToImage,
                         String publishedAt, String content) {
-
-
         }
     }
 

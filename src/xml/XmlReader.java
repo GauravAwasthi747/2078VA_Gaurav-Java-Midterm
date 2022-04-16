@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
  * If you don't know what XML is... Look it up! You can expect to see a lot of XML very soon
  */
 
-public class XmlReader {
+public class XmlReader<grade> {
 
     public List<Student> parseData(String tagName, String path) throws ParserConfigurationException, SAXException, IOException {
 
@@ -75,6 +75,17 @@ public class XmlReader {
     // You must implement this method
     public char convertIntToChar(String score) {
         char grade = ' ';
+        int num = Integer.parseInt(score);
+
+        if (num >= 90) {
+            grade = 'A';
+        } else if ((num >= 80) && (num <= 89)) {
+            grade = 'B';
+        } else if ((num >= 70) && (num <= 79)) {
+            grade = 'C';
+        } else {
+            grade = 'D';
+        }
 
         return grade;
     }

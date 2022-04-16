@@ -1,10 +1,7 @@
 package xml;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -55,19 +52,98 @@ public class ProcessStudentInfo {
 
         // To get you started, your system's abs path has been initialized and some add'l variables have been declared
         String systemPath = System.getProperty("user.dir");
-        String seleniumDocRelativePath;
-        String qtpDocRelativePath;
-        String seleniumDocPath;
-        String qtpDocPath;
+        String seleniumDocRelativePath = "\\src\\xml\\data\\selenium.xml";
+        String qtpDocRelativePath = "\\src\\xml\\data\\qtp.xml";
+        String seleniumDocPath = systemPath + seleniumDocRelativePath;
+        String qtpDocPath = systemPath + qtpDocRelativePath;
         String tag = "id";
 
         /*
          Here is a map that you'll be using to store 2 lists. One will contain Selenium students, the other will
          contain QTP students
          */
-        Map<String, List<Student>> studentMap = new LinkedHashMap<String, List<Student>>();
 
-        // Implement the rest below, as per the instructions
+        XmlReader objXML = new XmlReader();
+
+        //list for qtp
+       ArrayList<Student> myList1 = (ArrayList<Student>) objXML.parseData("id", qtpDocPath);
+
+        //list for selenium
+        ArrayList<Student> myList2 = (ArrayList<Student>) objXML.parseData("id", seleniumDocPath);
+
+        System.out.println(myList1);
+        System.out.println(myList2);
+//
+//          ArrayList<Student> myArrayList1 = new ArrayList();
+//
+//          for (int i = 0; i<(myList1.size()); i++) {
+//            String qtpList = String.valueOf(myList1.get(i));
+//
+//            if (qtpList.contains("(")) {
+//                qtpList = qtpList.replace("(", " ");
+//            }
+//
+//            if (qtpList.contains(")")) {
+//                qtpList = qtpList.replace(")", "  ");
+//            }
+//
+//            //System.out.println(qtpList);
+//
+//            String[] qtpListArray = qtpList.split(", ");
+//
+//            for (int j = 0; j <(qtpListArray.length); j++) {
+//               // System.out.println(qtpListArray[j]);
+//                myArrayList1.add(qtpListArray);
+//            }
+//
+//            System.out.println(myArrayList1.get(i));
+//
+//        }
+//
+        System.out.println();
+//
+//        List<String> myArrayList2 = new ArrayList();
+//        for (int m = 0; m<(myList2.size()); m++) {
+//            String seleniumList = String.valueOf(myList2.get(m));
+//
+//            if (seleniumList.contains("(")) {
+//                seleniumList = seleniumList.replace("(", " ");
+//            }
+//
+//            if (seleniumList.contains(")")) {
+//                seleniumList = seleniumList.replace(")", "  ");
+//            }
+//
+//            //System.out.println(qtpList);
+//
+//            String[] seleniumListArray = seleniumList.split(", ");
+//
+//            for (int n = 0; n <(seleniumListArray.length); n++) {
+//                //System.out.println(seleniumListArray[n]);
+//                myArrayList2.add(seleniumListArray[n]);
+//            }
+//
+//            System.out.println(myArrayList2.get(m));
+//        }
+
+
+
+        //joining the list
+        Map<String, List<Student>> studentMap = new LinkedHashMap<String, List<Student>>();
+        studentMap.put("qtp", myList1);
+        studentMap.put("selenium", myList2);
+
+        System.out.println(studentMap.get("qtp"));
+
+
+        Set<Map.Entry<String, List<Student>>> entrySet = studentMap.entrySet();
+        Iterator studentIter = entrySet.iterator();
+
+        while (studentIter.hasNext()) {
+            System.out.println(studentIter.next());
+        }
+
+
 
     }
 }

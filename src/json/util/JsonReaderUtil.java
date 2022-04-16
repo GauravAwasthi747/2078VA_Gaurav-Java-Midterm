@@ -68,10 +68,21 @@ public class JsonReaderUtil {
             for (int i = 0; i < jsonArray.size() - 1; i++) {
                 try {
                     JsonObject jsonobject = jsonArray.get(i).getAsJsonObject();
+
                     // Your code implementation starts here
                     empEmail = jsonobject.get("empEmail").toString();
+                    empName = jsonobject.get("empName").toString();
+                    empDept = jsonobject.get("department").toString();
+                    empSalary = jsonobject.get("salary").toString();
 
-                    System.out.println(empEmail);
+
+                    Employee objEmployee = new Employee(empEmail, empName, empSalary, empDept);
+                    empList.add(objEmployee);
+
+                    System.out.println("NAME: " + empName);
+                    System.out.println("EMAIL: " + empEmail);
+                    System.out.println("DEPT: " + empDept);
+                    System.out.println("SALARY: " + empSalary + "\n");
 
                 } catch (NullPointerException np) {
                     System.out.println("NO EMAIL EXISTS FOR STUDENT AT INDEX " + i);

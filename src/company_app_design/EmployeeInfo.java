@@ -2,13 +2,13 @@ package company_app_design;
 
 import java.util.Scanner;
 
-public class EmployeeInfo {
+public class EmployeeInfo extends EmployeeData{
 
     /** INSTRUCTIONS
      * This class should implement the Employee interface, but you must do that without using the keyword `implement`
      * anywhere in this class.
      *
-     * HINT: Take a look at the collections framework diagram. Do you see how a class may implement an interface without
+     * HINT: Take a look at the collections' framework diagram. Do you see how a class may implement an interface without
      *       directly implementing it?
      *
      * YOU MUST USE/DO:
@@ -22,15 +22,28 @@ public class EmployeeInfo {
 
     // Make sure to declare and use static, non-static & final fields
     static final String companyName = "Tesla";
+    static int salary;
+    private int employeeID;
+    private String employeeName;
+    private String employeeDepartment;
+    private String employeeJobStatus;
+    private String employee401kPlan;
 
     // You must have/use multiple constructors to initialize instance variables that you will create above
-    public EmployeeInfo(int employeeId) {
-
+    public EmployeeInfo(String employeeName, int employeeId) {
+       this.employeeID = employeeId;
+       this.employeeName = employeeName;
     }
 
-    public EmployeeInfo(String name, int employeeId) {
-
+    public EmployeeInfo(String employeeName, int employeeId, String employeeDepartment, String employeeJobStatus, int employeeSalary, String employee401kPlan) {
+        this.employeeName = employeeName;
+        this.employeeID = employeeId;
+        this.employeeDepartment= employeeDepartment;
+        this.employeeJobStatus = employeeJobStatus;
+        this.salary = employeeSalary;
+        this.employee401kPlan = employee401kPlan;
     }
+
 
     /*
     You need to implement the logic of this method as such:
@@ -43,6 +56,16 @@ public class EmployeeInfo {
      */
     public static int calculateAnnualBonus(int salary, int performanceGrade) {
         int total = 0;
+
+        if (performanceGrade >= 8) {
+            total = (int)((double)salary * (double)(.1));
+
+        } else if ((performanceGrade >=5) && (performanceGrade < 8)) {
+            total = (int)((double)salary * (double)(.1));;
+        } else {
+            System.out.println("Your performance grade is: " + performanceGrade + "\nWork hard for: " + (5-performanceGrade) + " points to earn at-least 6% bonus");
+        }
+
         return total;
     }
 
@@ -58,18 +81,80 @@ public class EmployeeInfo {
     public static int calculateEmployeePension() {
         int total = 0;
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Please enter start date in format (example: May,2015): ");
         String joiningDate = sc.nextLine();
+
         System.out.println("Please enter today's date in format (example: August,2017): ");
         String todaysDate = sc.nextLine();
+
         String convertedJoiningDate = DateConversion.convertDate(joiningDate);
         String convertedTodaysDate = DateConversion.convertDate(todaysDate);
 
         // Figure out how to extract the number of years the employee has been with the company, using the above 2 dates
         // Calculate pension
+        String[] joiningYear = convertedJoiningDate.split("/");
+        int jobJoiningYear = Integer.parseInt(joiningYear[1]);
+
+
+        String[] retirementYear = convertedTodaysDate.split("/");
+        int jobRetiringYear = Integer.parseInt(retirementYear[1]);
+
+        total = (int) ((jobRetiringYear-jobJoiningYear)*(.05*salary));
 
         return total;
     }
+
+
+    //overwrite methods from inheritance class.
+    @Override
+    public int employeeId() {
+        return employeeID;
+    }
+
+    @Override
+    public String employeeName() {
+        return employeeName;
+    }
+
+    @Override
+    public void assignDepartment() {
+        System.out.println("Employee current Department is: " + employeeDepartment);
+    }
+
+    @Override
+    public int calculateSalary() {
+        return salary;
+    }
+
+    @Override
+    public void benefits() {
+        if (employee401kPlan.toUpperCase().equals("YES")) {
+            System.out.println("Employee has active 401K plan.");
+        } else {
+            System.out.println("Employee doesn't have the 401K plan. \n Reaching out to HR is recommended.");
+        }
+    }
+
+    @Override
+    void isTrainingReq() {
+        System.out.println("All Employees are required to have updated trainings in their profiles as per their department");
+    }
+
+    void getEmployeeJobStatus() {
+        System.out.println("Employee Job Status is: " + employeeJobStatus);
+        super.hasMedicalInsurance();
+    }
+
+    @Override
+    void hasMedicalInsurance() {
+        if (employeeJobStatus.toUpperCase().equals("FULL TIME")) {
+            super.hasMedicalInsurance();
+        } else {
+            System.out.println("Part Time and Interns don't have medical insurance");
+        }
+    }
+
 
     private static class DateConversion {
 
