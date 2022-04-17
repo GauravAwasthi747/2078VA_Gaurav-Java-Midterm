@@ -1,16 +1,19 @@
 package xml;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import databases.SharedStepsDatabase;
 import org.xml.sax.SAXException;
 
 
 public class ProcessStudentInfo {
 
-    /** INSTRUCTIONS
+    /**
+     * INSTRUCTIONS
      * Take a look at the XmlReader class, found within this package. Try to understand what the parseData() method
      * is doing. This is essential to figuring out how to implement the remainder of this exercise.
      *
@@ -42,13 +45,12 @@ public class ProcessStudentInfo {
      * Last Name:  Roni
      * GRADE:      C
      * ......................................................
-     *
+     * <p>
      * Finally, you must store all student data into a database table, called `selenium_students`
      * Use any database (MongoDB, Oracle MySQL, PostgreSQL) to store and retrieve data.
-     *
      **/
 
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, SQLException {
 
         // To get you started, your system's abs path has been initialized and some add'l variables have been declared
         String systemPath = System.getProperty("user.dir");
@@ -63,87 +65,101 @@ public class ProcessStudentInfo {
          contain QTP students
          */
 
-        XmlReader objXML = new XmlReader();
+       // public static void printStudentInfo () throws ParserConfigurationException, IOException, SAXException {
 
-        //list for qtp
-       ArrayList<Student> myList1 = (ArrayList<Student>) objXML.parseData("id", qtpDocPath);
+            XmlReader objXML = new XmlReader();
 
-        //list for selenium
-        ArrayList<Student> myList2 = (ArrayList<Student>) objXML.parseData("id", seleniumDocPath);
+            //list for qtp
+            ArrayList<Student> myList1;
+            myList1 = (ArrayList<Student>) objXML.parseData("id", qtpDocPath);
+            System.out.println("QTP Student List: " + myList1);
 
-        System.out.println(myList1);
-        System.out.println(myList2);
-//
-//          ArrayList<Student> myArrayList1 = new ArrayList();
-//
-//          for (int i = 0; i<(myList1.size()); i++) {
-//            String qtpList = String.valueOf(myList1.get(i));
-//
-//            if (qtpList.contains("(")) {
-//                qtpList = qtpList.replace("(", " ");
-//            }
-//
-//            if (qtpList.contains(")")) {
-//                qtpList = qtpList.replace(")", "  ");
-//            }
-//
-//            //System.out.println(qtpList);
-//
-//            String[] qtpListArray = qtpList.split(", ");
-//
-//            for (int j = 0; j <(qtpListArray.length); j++) {
-//               // System.out.println(qtpListArray[j]);
-//                myArrayList1.add(qtpListArray);
-//            }
-//
-//            System.out.println(myArrayList1.get(i));
-//
-//        }
-//
-        System.out.println();
-//
-//        List<String> myArrayList2 = new ArrayList();
-//        for (int m = 0; m<(myList2.size()); m++) {
-//            String seleniumList = String.valueOf(myList2.get(m));
-//
-//            if (seleniumList.contains("(")) {
-//                seleniumList = seleniumList.replace("(", " ");
-//            }
-//
-//            if (seleniumList.contains(")")) {
-//                seleniumList = seleniumList.replace(")", "  ");
-//            }
-//
-//            //System.out.println(qtpList);
-//
-//            String[] seleniumListArray = seleniumList.split(", ");
-//
-//            for (int n = 0; n <(seleniumListArray.length); n++) {
-//                //System.out.println(seleniumListArray[n]);
-//                myArrayList2.add(seleniumListArray[n]);
-//            }
-//
-//            System.out.println(myArrayList2.get(m));
-//        }
+            //list for selenium
+            ArrayList<Student> myList2;
+            myList2 = (ArrayList<Student>) objXML.parseData("id", seleniumDocPath);
+            System.out.println("\nSelenium Student List: " + myList2);
+       // }
 
+       // public static void studentIretration (ArrayList < Student > list) throws ParserConfigurationException, IOException, SAXException {
 
+        List<Student> myList = new ArrayList<>();
 
-        //joining the list
+        myList.addAll(myList1);
+        myList.addAll(myList2);
+
+        System.out.println(myList);
+
         Map<String, List<Student>> studentMap = new LinkedHashMap<String, List<Student>>();
-        studentMap.put("qtp", myList1);
-        studentMap.put("selenium", myList2);
 
-        System.out.println(studentMap.get("qtp"));
+        int i = 0;
+        while (i < myList.size()) {
+            studentMap.put("Student Id: " + String.valueOf(myList.get(i).getId()), myList);
+            studentMap.put("First Name: " + String.valueOf(myList.get(i).getFirstName()), myList);
+            studentMap.put("Last Name: " + String.valueOf(myList.get(i).getLastName()), myList);
+            studentMap.put("Grade: " + String.valueOf(myList.get(i).getScore()), myList);
+            i++;
+        }
 
+        //Iterator
+        Iterator studentIterator = studentMap.keySet().iterator();
 
-        Set<Map.Entry<String, List<Student>>> entrySet = studentMap.entrySet();
-        Iterator studentIter = entrySet.iterator();
-
-        while (studentIter.hasNext()) {
-            System.out.println(studentIter.next());
+        //While Loop
+        while (studentIterator.hasNext()) {
+            System.out.println(studentIterator.next());
         }
 
 
+        SharedStepsDatabase ssdb = new SharedStepsDatabase();
+        //ssdb.insertMap("selenium_students",List<String,List<String>>studentMap);  --can't fix this issue
+
+        // Retrieve all elements from the newly created table
+        String student_query = "SELECT * FROM SELENIUM_STUDENTS";
+        List<List<String>> students = ssdb.executeQueryReadAll(student_query);
+        System.out.println(students);
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        Iterator studentIterator = studentMap.entrySet().iterator();
+//
+//        while (studentIterator.hasNext()) {
+//            System.out.println(studentIterator.next());
+//        }
+
+
+
+
+//        int i = 0;
+//        while (i < myList.size()) {
+//
+//            System.out.println("Student ID: " + myList.get(i).getId());
+//            System.out.println("First Name: " + myList.get(i).getFirstName());
+//            System.out.println("Last Name:  " + myList.get(i).getLastName());
+//            System.out.println("Grade:  " + myList.get(i).getScore());
+//            System.out.println();
+//            i++;
+//        }
+
+
+       // }
+
+//
+//    }
+//}

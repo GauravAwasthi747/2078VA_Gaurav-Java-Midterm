@@ -4,15 +4,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import databases.SharedStepsDatabase;
 import org.json.JSONException;
+import xml.Student;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.*;
 
 public class CnnAPI {
     /** INSTRUCTIONS
@@ -57,7 +59,7 @@ public class CnnAPI {
      *
      */
 
-    public static void main(String[] args) throws IOException, JSONException {
+    public static void main(String[] args) throws IOException, JSONException, SQLException {
         String apiKey = "fcf9aeae20674b3195b6349b8e606b4d";
         String URL = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=" + apiKey;
 
@@ -92,6 +94,8 @@ public class CnnAPI {
         String publishedAt;
         String content;
 
+        SharedStepsDatabase ssdb = new SharedStepsDatabase();
+
         for (int i = 0; i < jsonArray.size() - 1; i++) {
 
             try {
@@ -118,12 +122,29 @@ public class CnnAPI {
                 System.out.println("PUBLISHED_AT : " + publishedAt);
                 System.out.println("CONTENT : " + content);
 
-                // Implement the remaining code, using the provided example within this try block
+                //Storing to DataBase   -- hard time in storing this into database.
+                ssdb.insertString("news_headlines","title",title);
+                ssdb.insertString("news_headlines","source",source);
+                ssdb.insertString("news_headlines","author",author);
+                ssdb.insertString("news_headlines","description",description);
+                ssdb.insertString("news_headlines","url",url);
+                ssdb.insertString("news_headlines","urlToImage",urlToImage);
+                ssdb.insertString("news_headlines","publishedAt",publishedAt);
+                ssdb.insertString("news_headlines","content",content);
+
+                // Retrieve all elements from the newly created table
+                String jason_query = "SELECT * FROM NEWS_HEADLINES";
+                List<String> jasonNews = ssdb.executeQueryReadAllSingleColumn(jason_query, "NEWS_HEADLINES");
+                System.out.println(jasonNews);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
+
+
+
+
     }
 
     // Inner Class
